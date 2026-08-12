@@ -1,0 +1,542 @@
+{
+  "entities": [
+    {
+      "id": "u_s_house_of_representatives",
+      "name": "U.S. House of Representatives",
+      "type": "org",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/congress-demo.link.md",
+      "line": 5
+    },
+    {
+      "id": "u_s_senate",
+      "name": "U.S. Senate",
+      "type": "org",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/congress-demo.link.md",
+      "line": 6
+    },
+    {
+      "id": "democratic_party",
+      "name": "Democratic Party",
+      "type": "org",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/congress-demo.link.md",
+      "line": 7
+    },
+    {
+      "id": "republican_party",
+      "name": "Republican Party",
+      "type": "org",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/congress-demo.link.md",
+      "line": 8
+    },
+    {
+      "id": "house_committee_on_oversight",
+      "name": "House Committee on Oversight",
+      "type": "org",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/congress-demo.link.md",
+      "line": 9
+    },
+    {
+      "id": "house_committee_on_energy_and_commerce",
+      "name": "House Committee on Energy and Commerce",
+      "type": "org",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/congress-demo.link.md",
+      "line": 10
+    },
+    {
+      "id": "senate_committee_on_finance",
+      "name": "Senate Committee on Finance",
+      "type": "org",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/congress-demo.link.md",
+      "line": 11
+    },
+    {
+      "id": "clean_grid_coalition",
+      "name": "Clean Grid Coalition",
+      "type": "org",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/congress-demo.link.md",
+      "line": 12
+    },
+    {
+      "id": "main_street_manufacturers_pac",
+      "name": "Main Street Manufacturers PAC",
+      "type": "org",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/congress-demo.link.md",
+      "line": 13
+    },
+    {
+      "id": "national_privacy_alliance",
+      "name": "National Privacy Alliance",
+      "type": "org",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/congress-demo.link.md",
+      "line": 14
+    },
+    {
+      "id": "department_of_energy",
+      "name": "Department of Energy",
+      "type": "org",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/congress-demo.link.md",
+      "line": 15
+    },
+    {
+      "id": "federal_trade_commission",
+      "name": "Federal Trade Commission",
+      "type": "org",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/congress-demo.link.md",
+      "line": 16
+    },
+    {
+      "id": "united_states",
+      "name": "United States",
+      "type": "place",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/congress-demo.link.md",
+      "line": 18
+    },
+    {
+      "id": "ny",
+      "name": "NY",
+      "type": "place",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/congress-demo.link.md",
+      "line": 19
+    },
+    {
+      "id": "ny_14",
+      "name": "NY-14",
+      "type": "place",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/congress-demo.link.md",
+      "line": 20
+    },
+    {
+      "id": "tx",
+      "name": "TX",
+      "type": "place",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/congress-demo.link.md",
+      "line": 21
+    },
+    {
+      "id": "tx_21",
+      "name": "TX-21",
+      "type": "place",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/congress-demo.link.md",
+      "line": 22
+    },
+    {
+      "id": "ca",
+      "name": "CA",
+      "type": "place",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/congress-demo.link.md",
+      "line": 23
+    },
+    {
+      "id": "ca_12",
+      "name": "CA-12",
+      "type": "place",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/congress-demo.link.md",
+      "line": 24
+    },
+    {
+      "id": "oh",
+      "name": "OH",
+      "type": "place",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/congress-demo.link.md",
+      "line": 25
+    },
+    {
+      "id": "capitol_hill",
+      "name": "Capitol Hill",
+      "type": "place",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/congress-demo.link.md",
+      "line": 26
+    },
+    {
+      "id": "rep_elena_marquez",
+      "name": "Rep. Elena Marquez",
+      "type": "person",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/congress-demo.link.md",
+      "line": 28
+    },
+    {
+      "id": "rep_thomas_hale",
+      "name": "Rep. Thomas Hale",
+      "type": "person",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/congress-demo.link.md",
+      "line": 29
+    },
+    {
+      "id": "rep_priya_shah",
+      "name": "Rep. Priya Shah",
+      "type": "person",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/congress-demo.link.md",
+      "line": 30
+    },
+    {
+      "id": "sen_marcus_reed",
+      "name": "Sen. Marcus Reed",
+      "type": "person",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/congress-demo.link.md",
+      "line": 31
+    },
+    {
+      "id": "alex_kim",
+      "name": "Alex Kim",
+      "type": "person",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/congress-demo.link.md",
+      "line": 32
+    },
+    {
+      "id": "dana_brooks",
+      "name": "Dana Brooks",
+      "type": "person",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/congress-demo.link.md",
+      "line": 33
+    },
+    {
+      "id": "hr_1204_grid_resilience_modernization_act",
+      "name": "HR 1204 - Grid Resilience Modernization Act",
+      "type": "asset",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/congress-demo.link.md",
+      "line": 35
+    },
+    {
+      "id": "hr_2248_consumer_data_protection_act",
+      "name": "HR 2248 - Consumer Data Protection Act",
+      "type": "asset",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/congress-demo.link.md",
+      "line": 36
+    },
+    {
+      "id": "s_901_domestic_manufacturing_tax_credit_act",
+      "name": "S 901 - Domestic Manufacturing Tax Credit Act",
+      "type": "asset",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/congress-demo.link.md",
+      "line": 37
+    },
+    {
+      "id": "hearing_grid_reliability_and_federal_permitting",
+      "name": "Hearing - Grid Reliability and Federal Permitting",
+      "type": "asset",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/congress-demo.link.md",
+      "line": 38
+    },
+    {
+      "id": "hearing_online_privacy_and_data_brokers",
+      "name": "Hearing - Online Privacy and Data Brokers",
+      "type": "asset",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/congress-demo.link.md",
+      "line": 39
+    }
+  ],
+  "relationships": [
+    {
+      "id": "rel_htaak6",
+      "sourceId": "house_committee_on_oversight",
+      "targetId": "u_s_house_of_representatives",
+      "label": "committee of",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/congress-demo.link.md",
+      "line": 41
+    },
+    {
+      "id": "rel_ni0q5m",
+      "sourceId": "house_committee_on_energy_and_commerce",
+      "targetId": "u_s_house_of_representatives",
+      "label": "committee of",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/congress-demo.link.md",
+      "line": 42
+    },
+    {
+      "id": "rel_1vtlzh6",
+      "sourceId": "senate_committee_on_finance",
+      "targetId": "u_s_senate",
+      "label": "committee of",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/congress-demo.link.md",
+      "line": 43
+    },
+    {
+      "id": "rel_lct4k9",
+      "sourceId": "rep_elena_marquez",
+      "targetId": "democratic_party",
+      "label": "member of",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/congress-demo.link.md",
+      "line": 45
+    },
+    {
+      "id": "rel_10hiyj",
+      "sourceId": "rep_elena_marquez",
+      "targetId": "ny",
+      "label": "represents state",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/congress-demo.link.md",
+      "line": 46
+    },
+    {
+      "id": "rel_13svoqd",
+      "sourceId": "rep_elena_marquez",
+      "targetId": "ny_14",
+      "label": "represents district",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/congress-demo.link.md",
+      "line": 47
+    },
+    {
+      "id": "rel_4pnmhv",
+      "sourceId": "rep_elena_marquez",
+      "targetId": "house_committee_on_energy_and_commerce",
+      "label": "member of",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/congress-demo.link.md",
+      "line": 48
+    },
+    {
+      "id": "rel_tfpew6",
+      "sourceId": "rep_elena_marquez",
+      "targetId": "hr_1204_grid_resilience_modernization_act",
+      "label": "sponsored",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/congress-demo.link.md",
+      "line": 49
+    },
+    {
+      "id": "rel_gyqx52",
+      "sourceId": "rep_elena_marquez",
+      "targetId": "hr_2248_consumer_data_protection_act",
+      "label": "cosponsored",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/congress-demo.link.md",
+      "line": 50
+    },
+    {
+      "id": "rel_4rkmcp",
+      "sourceId": "rep_thomas_hale",
+      "targetId": "republican_party",
+      "label": "member of",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/congress-demo.link.md",
+      "line": 52
+    },
+    {
+      "id": "rel_11pi4hu",
+      "sourceId": "rep_thomas_hale",
+      "targetId": "tx",
+      "label": "represents state",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/congress-demo.link.md",
+      "line": 53
+    },
+    {
+      "id": "rel_tthnq",
+      "sourceId": "rep_thomas_hale",
+      "targetId": "tx_21",
+      "label": "represents district",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/congress-demo.link.md",
+      "line": 54
+    },
+    {
+      "id": "rel_oni7ve",
+      "sourceId": "rep_thomas_hale",
+      "targetId": "house_committee_on_oversight",
+      "label": "member of",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/congress-demo.link.md",
+      "line": 55
+    },
+    {
+      "id": "rel_16da06s",
+      "sourceId": "rep_thomas_hale",
+      "targetId": "hr_2248_consumer_data_protection_act",
+      "label": "voted no",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/congress-demo.link.md",
+      "line": 56
+    },
+    {
+      "id": "rel_1n3wt67",
+      "sourceId": "rep_thomas_hale",
+      "targetId": "s_901_domestic_manufacturing_tax_credit_act",
+      "label": "supports companion bill",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/congress-demo.link.md",
+      "line": 57
+    },
+    {
+      "id": "rel_1c35kzt",
+      "sourceId": "rep_priya_shah",
+      "targetId": "democratic_party",
+      "label": "member of",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/congress-demo.link.md",
+      "line": 59
+    },
+    {
+      "id": "rel_t3485v",
+      "sourceId": "rep_priya_shah",
+      "targetId": "ca",
+      "label": "represents state",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/congress-demo.link.md",
+      "line": 60
+    },
+    {
+      "id": "rel_z9c86x",
+      "sourceId": "rep_priya_shah",
+      "targetId": "ca_12",
+      "label": "represents district",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/congress-demo.link.md",
+      "line": 61
+    },
+    {
+      "id": "rel_hvrps5",
+      "sourceId": "rep_priya_shah",
+      "targetId": "house_committee_on_oversight",
+      "label": "member of",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/congress-demo.link.md",
+      "line": 62
+    },
+    {
+      "id": "rel_hd7wjl",
+      "sourceId": "rep_priya_shah",
+      "targetId": "hr_2248_consumer_data_protection_act",
+      "label": "sponsored",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/congress-demo.link.md",
+      "line": 63
+    },
+    {
+      "id": "rel_jufw0j",
+      "sourceId": "sen_marcus_reed",
+      "targetId": "republican_party",
+      "label": "member of",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/congress-demo.link.md",
+      "line": 65
+    },
+    {
+      "id": "rel_1eqem4b",
+      "sourceId": "sen_marcus_reed",
+      "targetId": "oh",
+      "label": "represents state",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/congress-demo.link.md",
+      "line": 66
+    },
+    {
+      "id": "rel_bkne7u",
+      "sourceId": "sen_marcus_reed",
+      "targetId": "senate_committee_on_finance",
+      "label": "member of",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/congress-demo.link.md",
+      "line": 67
+    },
+    {
+      "id": "rel_n7sff1",
+      "sourceId": "sen_marcus_reed",
+      "targetId": "s_901_domestic_manufacturing_tax_credit_act",
+      "label": "sponsored",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/congress-demo.link.md",
+      "line": 68
+    },
+    {
+      "id": "rel_l5husv",
+      "sourceId": "alex_kim",
+      "targetId": "rep_elena_marquez",
+      "label": "chief of staff to",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/congress-demo.link.md",
+      "line": 70
+    },
+    {
+      "id": "rel_91jgbc",
+      "sourceId": "dana_brooks",
+      "targetId": "sen_marcus_reed",
+      "label": "legislative director to",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/congress-demo.link.md",
+      "line": 71
+    },
+    {
+      "id": "rel_z3f759",
+      "sourceId": "clean_grid_coalition",
+      "targetId": "rep_elena_marquez",
+      "label": "contributed 18000",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/congress-demo.link.md",
+      "line": 73
+    },
+    {
+      "id": "rel_1sa0rg7",
+      "sourceId": "clean_grid_coalition",
+      "targetId": "hr_1204_grid_resilience_modernization_act",
+      "label": "supports",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/congress-demo.link.md",
+      "line": 74
+    },
+    {
+      "id": "rel_10fdg2y",
+      "sourceId": "main_street_manufacturers_pac",
+      "targetId": "sen_marcus_reed",
+      "label": "contributed 32000",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/congress-demo.link.md",
+      "line": 75
+    },
+    {
+      "id": "rel_ed6kf2",
+      "sourceId": "main_street_manufacturers_pac",
+      "targetId": "s_901_domestic_manufacturing_tax_credit_act",
+      "label": "supports",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/congress-demo.link.md",
+      "line": 76
+    },
+    {
+      "id": "rel_zzt3uk",
+      "sourceId": "national_privacy_alliance",
+      "targetId": "rep_priya_shah",
+      "label": "contributed 12000",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/congress-demo.link.md",
+      "line": 77
+    },
+    {
+      "id": "rel_84qalj",
+      "sourceId": "national_privacy_alliance",
+      "targetId": "hr_2248_consumer_data_protection_act",
+      "label": "supports",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/congress-demo.link.md",
+      "line": 78
+    },
+    {
+      "id": "rel_sdsmdr",
+      "sourceId": "department_of_energy",
+      "targetId": "hr_1204_grid_resilience_modernization_act",
+      "label": "affected by",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/congress-demo.link.md",
+      "line": 80
+    },
+    {
+      "id": "rel_182dsyd",
+      "sourceId": "federal_trade_commission",
+      "targetId": "hr_2248_consumer_data_protection_act",
+      "label": "affected by",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/congress-demo.link.md",
+      "line": 81
+    }
+  ],
+  "events": [
+    {
+      "id": "event_1vf9v9y",
+      "date": "2026-02-04",
+      "label": "hearing",
+      "participants": [
+        "Rep. Elena Marquez",
+        "Department of Energy",
+        "Hearing - Grid Reliability and Federal Permitting"
+      ],
+      "location": "Capitol Hill",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/congress-demo.link.md",
+      "line": 83
+    },
+    {
+      "id": "event_1cpccm6",
+      "date": "2026-02-12",
+      "label": "markup",
+      "participants": [
+        "Rep. Priya Shah",
+        "Rep. Thomas Hale",
+        "HR 2248 - Consumer Data Protection Act"
+      ],
+      "location": "Capitol Hill",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/congress-demo.link.md",
+      "line": 84
+    },
+    {
+      "id": "event_ex5l59",
+      "date": "2026-03-03",
+      "label": "fundraiser",
+      "participants": [
+        "Sen. Marcus Reed",
+        "Main Street Manufacturers PAC"
+      ],
+      "location": "Capitol Hill",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/congress-demo.link.md",
+      "line": 85
+    }
+  ]
+}

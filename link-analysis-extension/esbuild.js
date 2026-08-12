@@ -3,11 +3,11 @@ const esbuild = require("esbuild");
 const watch = process.argv.includes("--watch");
 
 const ctxOptions = {
-  entryPoints: ["src/extension.ts"],
+  entryPoints: ["src/extension.ts", "src/cli.ts"],
   bundle: true,
   format: "cjs",
   platform: "node",
-  outfile: "dist/extension.js",
+  outdir: "dist",
   external: ["vscode"],
   sourcemap: true,
   target: "node18"

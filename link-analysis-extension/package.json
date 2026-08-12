@@ -1,7 +1,7 @@
 {
   "name": "link-analysis-extension",
   "displayName": "Link Analysis",
-  "description": "Local-first structured link analysis in VS Code.",
+  "description": "Local-first network analysis for institutions, starting with Congress.",
   "version": "0.0.1",
   "publisher": "local",
   "license": "MIT",
@@ -19,6 +19,9 @@
     "workspaceContains:**/*.link.md"
   ],
   "main": "./dist/extension.js",
+  "bin": {
+    "savi": "./dist/cli.js"
+  },
   "files": [
     "dist",
     "webview/dist",

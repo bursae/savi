@@ -147,7 +147,7 @@ export default function App(): JSX.Element {
                         vscode.postMessage({ type: "edge:selected", payload: { id: relationship.id } });
                       }}
                     >
-                      {source} -> {target} : {relationship.label}
+                      {source} {"->"} {target} : {relationship.label}
                     </button>
                   );
                 })}

@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rep. Elena Marquez - Savi Chart</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f7f5ef;
+      --ink: #1d2528;
+      --muted: #667075;
+      --line: #b8c0bd;
+      --panel: #ffffff;
+      --person: #c85f3e;
+      --org: #2f6f89;
+      --place: #4d7d62;
+      --asset: #7a5a9a;
+      --event: #c7a135;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--ink);
+      font: 14px/1.4 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      overflow: hidden;
+    }
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 5;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 14px 18px;
+      background: rgba(247, 245, 239, 0.92);
+      border-bottom: 1px solid #ded9cd;
+      backdrop-filter: blur(12px);
+    }
+    h1 {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 0;
+    }
+    .meta {
+      color: var(--muted);
+      font-size: 12px;
+      white-space: nowrap;
+    }
+    .legend {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .legend span {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .swatch {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: var(--color);
+    }
+    svg {
+      width: 100vw;
+      height: 100vh;
+      display: block;
+      cursor: grab;
+    }
+    svg:active { cursor: grabbing; }
+    .edge {
+      stroke: var(--line);
+      stroke-width: 1.7;
+      marker-end: url(#arrow);
+      opacity: 0.82;
+    }
+    .edge-label {
+      fill: #556064;
+      font-size: 11px;
+      paint-order: stroke;
+      stroke: var(--bg);
+      stroke-width: 4px;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      pointer-events: none;
+    }
+    .node circle,
+    .node rect,
+    .node path {
+      fill: var(--node-color);
+      stroke: #ffffff;
+      stroke-width: 2;
+      filter: drop-shadow(0 4px 8px rgba(32, 38, 40, 0.18));
+    }
+    .node.focus circle,
+    .node.focus rect,
+    .node.focus path {
+      stroke: #111;
+      stroke-width: 4;
+    }
+    .node text {
+      text-anchor: middle;
+      pointer-events: none;
+    }
+    .node .label {
+      fill: #161d20;
+      font-weight: 700;
+      font-size: 12px;
+      paint-order: stroke;
+      stroke: var(--bg);
+      stroke-width: 5px;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .node .subtitle {
+      fill: var(--muted);
+      font-size: 10px;
+      paint-order: stroke;
+      stroke: var(--bg);
+      stroke-width: 4px;
+    }
+    .tooltip {
+      position: fixed;
+      z-index: 10;
+      max-width: 320px;
+      padding: 10px 12px;
+      border: 1px solid #d8d3c8;
+      border-radius: 8px;
+      background: var(--panel);
+      box-shadow: 0 10px 30px rgba(31, 38, 41, 0.18);
+      pointer-events: none;
+      opacity: 0;
+      transform: translate(8px, 8px);
+    }
+    .tooltip strong {
+      display: block;
+      margin-bottom: 2px;
+      font-size: 13px;
+    }
+    .tooltip span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>Rep. Elena Marquez - Savi Chart</h1>
+      <div class="meta">19 nodes · 25 links · focused on Rep. Elena Marquez</div>
+    </div>
+    <div class="legend">
+      <span><i class="swatch" style="--color: var(--person)"></i>Person</span>
+      <span><i class="swatch" style="--color: var(--org)"></i>Org</span>
+      <span><i class="swatch" style="--color: var(--asset)"></i>Asset</span>
+      <span><i class="swatch" style="--color: var(--place)"></i>Place</span>
+      <span><i class="swatch" style="--color: var(--event)"></i>Event</span>
+    </div>
+  </header>
+  <svg id="chart" role="img" aria-label="Savi network chart"></svg>
+  <div class="tooltip" id="tooltip"></div>
+  <script>
+    const chartData = {"title":"Rep. Elena Marquez - Savi Chart","focusName":"Rep. Elena Marquez","nodes":[{"id":"u_s_house_of_representatives","label":"U.S. House of Representatives","type":"org","subtitle":"org","focus":false},{"id":"democratic_party","label":"Democratic Party","type":"org","subtitle":"org","focus":false},{"id":"house_committee_on_energy_and_commerce","label":"House Committee on Energy and Commerce","type":"org","subtitle":"org","focus":false},{"id":"clean_grid_coalition","label":"Clean Grid Coalition","type":"org","subtitle":"org","focus":false},{"id":"national_privacy_alliance","label":"National Privacy Alliance","type":"org","subtitle":"org","focus":false},{"id":"department_of_energy","label":"Department of Energy","type":"org","subtitle":"org","focus":false},{"id":"federal_trade_commission","label":"Federal Trade Commission","type":"org","subtitle":"org","focus":false},{"id":"ny","label":"NY","type":"place","subtitle":"place","focus":false},{"id":"ny_14","label":"NY-14","type":"place","subtitle":"place","focus":false},{"id":"capitol_hill","label":"Capitol Hill","type":"place","subtitle":"place","focus":false},{"id":"rep_elena_marquez","label":"Rep. Elena Marquez","type":"person","subtitle":"person","focus":true},{"id":"rep_thomas_hale","label":"Rep. Thomas Hale","type":"person","subtitle":"person","focus":false},{"id":"rep_priya_shah","label":"Rep. Priya Shah","type":"person","subtitle":"person","focus":false},{"id":"alex_kim","label":"Alex Kim","type":"person","subtitle":"person","focus":false},{"id":"hr_1204_grid_resilience_modernization_act","label":"HR 1204 - Grid Resilience Modernization Act","type":"asset","subtitle":"asset","focus":false},{"id":"hr_2248_consumer_data_protection_act","label":"HR 2248 - Consumer Data Protection Act","type":"asset","subtitle":"asset","focus":false},{"id":"hearing_grid_reliability_and_federal_permitting","label":"Hearing - Grid Reliability and Federal Permitting","type":"asset","subtitle":"asset","focus":false},{"id":"event_node_event_1vf9v9y","label":"hearing","type":"event","subtitle":"2026-02-04","focus":false},{"id":"event_node_event_1cpccm6","label":"markup","type":"event","subtitle":"2026-02-12","focus":false}],"edges":[{"id":"rel_ni0q5m","source":"house_committee_on_energy_and_commerce","target":"u_s_house_of_representatives","label":"committee of"},{"id":"rel_lct4k9","source":"rep_elena_marquez","target":"democratic_party","label":"member of"},{"id":"rel_10hiyj","source":"rep_elena_marquez","target":"ny","label":"represents state"},{"id":"rel_13svoqd","source":"rep_elena_marquez","target":"ny_14","label":"represents district"},{"id":"rel_4pnmhv","source":"rep_elena_marquez","target":"house_committee_on_energy_and_commerce","label":"member of"},{"id":"rel_tfpew6","source":"rep_elena_marquez","target":"hr_1204_grid_resilience_modernization_act","label":"sponsored"},{"id":"rel_gyqx52","source":"rep_elena_marquez","target":"hr_2248_consumer_data_protection_act","label":"cosponsored"},{"id":"rel_16da06s","source":"rep_thomas_hale","target":"hr_2248_consumer_data_protection_act","label":"voted no"},{"id":"rel_1c35kzt","source":"rep_priya_shah","target":"democratic_party","label":"member of"},{"id":"rel_hd7wjl","source":"rep_priya_shah","target":"hr_2248_consumer_data_protection_act","label":"sponsored"},{"id":"rel_l5husv","source":"alex_kim","target":"rep_elena_marquez","label":"chief of staff to"},{"id":"rel_z3f759","source":"clean_grid_coalition","target":"rep_elena_marquez","label":"contributed 18000"},{"id":"rel_1sa0rg7","source":"clean_grid_coalition","target":"hr_1204_grid_resilience_modernization_act","label":"supports"},{"id":"rel_zzt3uk","source":"national_privacy_alliance","target":"rep_priya_shah","label":"contributed 12000"},{"id":"rel_84qalj","source":"national_privacy_alliance","target":"hr_2248_consumer_data_protection_act","label":"supports"},{"id":"rel_sdsmdr","source":"department_of_energy","target":"hr_1204_grid_resilience_modernization_act","label":"affected by"},{"id":"rel_182dsyd","source":"federal_trade_commission","target":"hr_2248_consumer_data_protection_act","label":"affected by"},{"id":"event_1vf9v9y_rep_elena_marquez","source":"rep_elena_marquez","target":"event_node_event_1vf9v9y","label":"participated in"},{"id":"event_1vf9v9y_department_of_energy","source":"department_of_energy","target":"event_node_event_1vf9v9y","label":"participated in"},{"id":"event_1vf9v9y_hearing_grid_reliability_and_federal_permitting","source":"hearing_grid_reliability_and_federal_permitting","target":"event_node_event_1vf9v9y","label":"participated in"},{"id":"event_1vf9v9y_capitol_hill","source":"event_node_event_1vf9v9y","target":"capitol_hill","label":"at"},{"id":"event_1cpccm6_rep_priya_shah","source":"rep_priya_shah","target":"event_node_event_1cpccm6","label":"participated in"},{"id":"event_1cpccm6_rep_thomas_hale","source":"rep_thomas_hale","target":"event_node_event_1cpccm6","label":"participated in"},{"id":"event_1cpccm6_hr_2248_consumer_data_protection_act","source":"hr_2248_consumer_data_protection_act","target":"event_node_event_1cpccm6","label":"participated in"},{"id":"event_1cpccm6_capitol_hill","source":"event_node_event_1cpccm6","target":"capitol_hill","label":"at"}]};
+    const typeColor = {
+      person: "var(--person)",
+      org: "var(--org)",
+      place: "var(--place)",
+      asset: "var(--asset)",
+      event: "var(--event)"
+    };
+    const svg = document.getElementById("chart");
+    const tooltip = document.getElementById("tooltip");
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    const centerX = width / 2;
+    const centerY = height / 2 + 28;
+    const nodes = chartData.nodes.map((node, index) => {
+      const angle = (index / Math.max(chartData.nodes.length, 1)) * Math.PI * 2;
+      const radius = node.focus ? 0 : Math.min(width, height) * (0.2 + (index % 4) * 0.035);
+      return {
+        ...node,
+        x: centerX + Math.cos(angle) * radius,
+        y: centerY + Math.sin(angle) * radius,
+        vx: 0,
+        vy: 0
+      };
+    });
+    const nodeById = new Map(nodes.map((node) => [node.id, node]));
+    const edges = chartData.edges
+      .map((edge) => ({ ...edge, sourceNode: nodeById.get(edge.source), targetNode: nodeById.get(edge.target) }))
+      .filter((edge) => edge.sourceNode && edge.targetNode);
+
+    const defs = make("defs");
+    defs.innerHTML = '<marker id="arrow" viewBox="0 0 10 10" refX="17" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#9aa4a1"></path></marker>';
+    svg.appendChild(defs);
+    const viewport = make("g");
+    svg.appendChild(viewport);
+    const edgeLayer = make("g");
+    const labelLayer = make("g");
+    const nodeLayer = make("g");
+    viewport.append(edgeLayer, labelLayer, nodeLayer);
+
+    for (const edge of edges) {
+      edge.el = make("line", "edge");
+      edge.labelEl = make("text", "edge-label");
+      edge.labelEl.textContent = edge.label;
+      edgeLayer.appendChild(edge.el);
+      labelLayer.appendChild(edge.labelEl);
+    }
+
+    for (const node of nodes) {
+      const group = make("g", "node" + (node.focus ? " focus" : ""));
+      group.style.setProperty("--node-color", typeColor[node.type]);
+      group.dataset.id = node.id;
+      group.dataset.label = node.label;
+      group.dataset.subtitle = node.subtitle || node.type;
+      group.appendChild(shapeFor(node));
+      const label = make("text", "label");
+      label.setAttribute("y", "34");
+      label.textContent = shortLabel(node.label);
+      const subtitle = make("text", "subtitle");
+      subtitle.setAttribute("y", "48");
+      subtitle.textContent = node.subtitle || node.type;
+      group.append(label, subtitle);
+      group.addEventListener("pointerenter", showTooltip);
+      group.addEventListener("pointermove", moveTooltip);
+      group.addEventListener("pointerleave", hideTooltip);
+      node.el = group;
+      nodeLayer.appendChild(group);
+    }
+
+    for (let i = 0; i < 380; i += 1) {
+      tick();
+    }
+    render();
+
+    let pan = { x: 0, y: 0 };
+    let scale = 1;
+    let dragStart = null;
+    svg.addEventListener("pointerdown", (event) => {
+      dragStart = { x: event.clientX, y: event.clientY, panX: pan.x, panY: pan.y };
+      svg.setPointerCapture(event.pointerId);
+    });
+    svg.addEventListener("pointermove", (event) => {
+      if (!dragStart) return;
+      pan = {
+        x: dragStart.panX + event.clientX - dragStart.x,
+        y: dragStart.panY + event.clientY - dragStart.y
+      };
+      updateViewport();
+    });
+    svg.addEventListener("pointerup", () => { dragStart = null; });
+    svg.addEventListener("wheel", (event) => {
+      event.preventDefault();
+      const nextScale = Math.max(0.35, Math.min(2.4, scale * (event.deltaY > 0 ? 0.92 : 1.08)));
+      scale = nextScale;
+      updateViewport();
+    }, { passive: false });
+
+    function tick() {
+      for (let i = 0; i < nodes.length; i += 1) {
+        for (let j = i + 1; j < nodes.length; j += 1) {
+          const a = nodes[i];
+          const b = nodes[j];
+          const dx = b.x - a.x || 0.01;
+          const dy = b.y - a.y || 0.01;
+          const distSq = dx * dx + dy * dy;
+          const force = Math.min(900 / distSq, 0.9);
+          a.vx -= dx * force;
+          a.vy -= dy * force;
+          b.vx += dx * force;
+          b.vy += dy * force;
+        }
+      }
+      for (const edge of edges) {
+        const a = edge.sourceNode;
+        const b = edge.targetNode;
+        const dx = b.x - a.x;
+        const dy = b.y - a.y;
+        const dist = Math.sqrt(dx * dx + dy * dy) || 1;
+        const target = edge.label.includes("contributed") ? 150 : 125;
+        const force = (dist - target) * 0.018;
+        const fx = (dx / dist) * force;
+        const fy = (dy / dist) * force;
+        a.vx += fx;
+        a.vy += fy;
+        b.vx -= fx;
+        b.vy -= fy;
+      }
+      for (const node of nodes) {
+        const pull = node.focus ? 0.08 : 0.012;
+        node.vx += (centerX - node.x) * pull;
+        node.vy += (centerY - node.y) * pull;
+        node.x += node.vx;
+        node.y += node.vy;
+        node.vx *= 0.72;
+        node.vy *= 0.72;
+      }
+    }
+
+    function render() {
+      for (const edge of edges) {
+        edge.el.setAttribute("x1", edge.sourceNode.x);
+        edge.el.setAttribute("y1", edge.sourceNode.y);
+        edge.el.setAttribute("x2", edge.targetNode.x);
+        edge.el.setAttribute("y2", edge.targetNode.y);
+        edge.labelEl.setAttribute("x", (edge.sourceNode.x + edge.targetNode.x) / 2);
+        edge.labelEl.setAttribute("y", (edge.sourceNode.y + edge.targetNode.y) / 2 - 4);
+      }
+      for (const node of nodes) {
+        node.el.setAttribute("transform", "translate(" + node.x + " " + node.y + ")");
+      }
+      updateViewport();
+    }
+
+    function updateViewport() {
+      viewport.setAttribute("transform", "translate(" + pan.x + " " + pan.y + ") scale(" + scale + ")");
+    }
+
+    function shapeFor(node) {
+      if (node.type === "org") {
+        const rect = make("rect");
+        rect.setAttribute("x", "-23");
+        rect.setAttribute("y", "-18");
+        rect.setAttribute("width", "46");
+        rect.setAttribute("height", "36");
+        rect.setAttribute("rx", "7");
+        return rect;
+      }
+      if (node.type === "asset") {
+        const path = make("path");
+        path.setAttribute("d", "M-16 -22 H11 L21 -12 V22 H-16 Z M11 -22 V-12 H21");
+        return path;
+      }
+      if (node.type === "place") {
+        const path = make("path");
+        path.setAttribute("d", "M0 -25 C13 -25 22 -15 22 -3 C22 13 0 27 0 27 C0 27 -22 13 -22 -3 C-22 -15 -13 -25 0 -25 Z");
+        return path;
+      }
+      if (node.type === "event") {
+        const rect = make("rect");
+        rect.setAttribute("x", "-20");
+        rect.setAttribute("y", "-20");
+        rect.setAttribute("width", "40");
+        rect.setAttribute("height", "40");
+        rect.setAttribute("rx", "20");
+        return rect;
+      }
+      const circle = make("circle");
+      circle.setAttribute("r", node.focus ? "28" : "22");
+      return circle;
+    }
+
+    function shortLabel(label) {
+      return label.length > 28 ? label.slice(0, 25) + "..." : label;
+    }
+
+    function showTooltip(event) {
+      tooltip.innerHTML = "<strong>" + escapeHtml(event.currentTarget.dataset.label) + "</strong><span>" + escapeHtml(event.currentTarget.dataset.subtitle) + "</span>";
+      tooltip.style.opacity = "1";
+      moveTooltip(event);
+    }
+
+    function moveTooltip(event) {
+      tooltip.style.left = event.clientX + "px";
+      tooltip.style.top = event.clientY + "px";
+    }
+
+    function hideTooltip() {
+      tooltip.style.opacity = "0";
+    }
+
+    function make(tag, className) {
+      const element = document.createElementNS("http://www.w3.org/2000/svg", tag);
+      if (className) element.setAttribute("class", className);
+      return element;
+    }
+
+    function escapeHtml(value) {
+      return String(value).replace(/[&<>"']/g, (char) => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+      })[char]);
+    }
+  </script>
+</body>
+</html>
