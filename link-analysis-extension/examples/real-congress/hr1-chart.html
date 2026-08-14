@@ -1,164 +1,9 @@
-import * as fs from "fs/promises";
-import * as path from "path";
-import { Entity, EventRecord, GraphModel, Relationship } from "../models/types";
-
-interface ChartNode {
-  id: string;
-  label: string;
-  type: Entity["type"] | "event";
-  subtitle?: string;
-  focus?: boolean;
-}
-
-interface ChartEdge {
-  id: string;
-  source: string;
-  target: string;
-  label: string;
-}
-
-interface ChartData {
-  title: string;
-  focusName?: string;
-  nodes: ChartNode[];
-  edges: ChartEdge[];
-}
-
-export interface ChartOptions {
-  focusName?: string;
-  depth: number;
-  outputPath: string;
-}
-
-export async function exportChart(caseDir: string, graph: GraphModel, options: ChartOptions): Promise<string> {
-  const chartData = buildChartData(graph, options.focusName, options.depth);
-  const resolvedOutputPath = path.resolve(caseDir, options.outputPath);
-  await fs.mkdir(path.dirname(resolvedOutputPath), { recursive: true });
-  await fs.writeFile(resolvedOutputPath, renderChartHtml(chartData), "utf8");
-  return resolvedOutputPath;
-}
-
-function buildChartData(graph: GraphModel, focusName: string | undefined, depth: number): ChartData {
-  const entityByName = new Map(graph.entities.map((entity) => [entity.name, entity]));
-  const eventNodes = graph.events.map(eventToNode);
-  const eventEdges = graph.events.flatMap((event) => eventToEdges(event, entityByName));
-  const baseNodes: ChartNode[] = [
-    ...graph.entities.map((entity) => ({
-      id: entity.id,
-      label: entity.name,
-      type: entity.type,
-      subtitle: entity.type
-    })),
-    ...eventNodes
-  ];
-  const baseEdges: ChartEdge[] = [
-    ...graph.relationships.map((relationship) => ({
-      id: relationship.id,
-      source: relationship.sourceId,
-      target: relationship.targetId,
-      label: relationship.label
-    })),
-    ...eventEdges
-  ];
-
-  if (!focusName) {
-    return {
-      title: "Savi Case Chart",
-      nodes: baseNodes,
-      edges: baseEdges
-    };
-  }
-
-  const focusEntity = graph.entities.find((entity) => entity.name.toLowerCase() === focusName.toLowerCase());
-  if (!focusEntity) {
-    throw new Error(`No entity found named "${focusName}".`);
-  }
-
-  const includedIds = collectNeighborhoodIds(focusEntity.id, baseEdges, Math.max(depth, 1));
-  const nodes = baseNodes
-    .filter((node) => includedIds.has(node.id))
-    .map((node) => ({ ...node, focus: node.id === focusEntity.id }));
-  const edges = baseEdges.filter((edge) => includedIds.has(edge.source) && includedIds.has(edge.target));
-
-  return {
-    title: `${focusEntity.name} - Savi Chart`,
-    focusName: focusEntity.name,
-    nodes,
-    edges
-  };
-}
-
-function collectNeighborhoodIds(focusId: string, edges: ChartEdge[], depth: number): Set<string> {
-  const included = new Set<string>([focusId]);
-  let frontier = new Set<string>([focusId]);
-
-  for (let step = 0; step < depth; step += 1) {
-    const next = new Set<string>();
-    for (const edge of edges) {
-      if (frontier.has(edge.source) && !included.has(edge.target)) {
-        next.add(edge.target);
-      }
-      if (frontier.has(edge.target) && !included.has(edge.source)) {
-        next.add(edge.source);
-      }
-    }
-    next.forEach((id) => included.add(id));
-    frontier = next;
-  }
-
-  return included;
-}
-
-function eventToNode(event: EventRecord): ChartNode {
-  return {
-    id: `event_node_${event.id}`,
-    label: event.label,
-    type: "event",
-    subtitle: event.date
-  };
-}
-
-function eventToEdges(event: EventRecord, entityByName: Map<string, Entity>): ChartEdge[] {
-  const eventNodeId = `event_node_${event.id}`;
-  const participantEdges = event.participants.flatMap((participant) => {
-    const entity = entityByName.get(participant);
-    if (!entity) {
-      return [];
-    }
-    return [
-      {
-        id: `${event.id}_${entity.id}`,
-        source: entity.id,
-        target: eventNodeId,
-        label: "participated in"
-      }
-    ];
-  });
-
-  const location = event.location ? entityByName.get(event.location) : undefined;
-  if (!location) {
-    return participantEdges;
-  }
-
-  return [
-    ...participantEdges,
-    {
-      id: `${event.id}_${location.id}`,
-      source: eventNodeId,
-      target: location.id,
-      label: "at"
-    }
-  ];
-}
-
-function renderChartHtml(data: ChartData): string {
-  const encodedData = JSON.stringify(data).replace(/</g, "\\u003c");
-  return `<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>${escapeHtml(data.title)}</title>
+  <title>H.R.1 - Reconciliation pursuant to H. Con. Res. 14 - Savi Chart</title>
   <style>
     :root {
       color-scheme: light;
@@ -401,8 +246,8 @@ function renderChartHtml(data: ChartData): string {
 <body>
   <header>
     <div>
-      <h1>${escapeHtml(data.title)}</h1>
-      <div class="meta">${data.nodes.length} nodes · ${data.edges.length} links${data.focusName ? ` · focused on ${escapeHtml(data.focusName)}` : ""}</div>
+      <h1>H.R.1 - Reconciliation pursuant to H. Con. Res. 14 - Savi Chart</h1>
+      <div class="meta">9 nodes · 12 links · focused on H.R.1 - Reconciliation pursuant to H. Con. Res. 14</div>
     </div>
     <div class="legend">
       <span><i class="swatch" style="--color: var(--person)"></i>Person</span>
@@ -427,7 +272,7 @@ function renderChartHtml(data: ChartData): string {
   <svg id="chart" role="img" aria-label="Savi network chart"></svg>
   <div class="tooltip" id="tooltip"></div>
   <script>
-    const chartData = ${encodedData};
+    const chartData = {"title":"H.R.1 - Reconciliation pursuant to H. Con. Res. 14 - Savi Chart","focusName":"H.R.1 - Reconciliation pursuant to H. Con. Res. 14","nodes":[{"id":"u_s_house_of_representatives","label":"U.S. House of Representatives","type":"org","subtitle":"org","focus":false},{"id":"republican_party","label":"Republican Party","type":"org","subtitle":"org","focus":false},{"id":"house_committee_on_the_budget","label":"House Committee on the Budget","type":"org","subtitle":"org","focus":false},{"id":"tx_19","label":"TX-19","type":"place","subtitle":"place","focus":false},{"id":"rep_jodey_arrington","label":"Rep. Jodey Arrington","type":"person","subtitle":"person","focus":false},{"id":"h_r_1_reconciliation_pursuant_to_h_con_res_14","label":"H.R.1 - Reconciliation pursuant to H. Con. Res. 14","type":"asset","subtitle":"asset","focus":true},{"id":"public_law_119_21","label":"Public Law 119-21","type":"asset","subtitle":"asset","focus":false},{"id":"event_node_event_61eca9","label":"introduced","type":"event","subtitle":"2025-05-20","focus":false},{"id":"event_node_event_j5prdo","label":"became law","type":"event","subtitle":"2025-07-04","focus":false}],"edges":[{"id":"rel_16kyeq","source":"rep_jodey_arrington","target":"republican_party","label":"member of"},{"id":"rel_1w9n167","source":"rep_jodey_arrington","target":"tx_19","label":"represents district"},{"id":"rel_107vnvq","source":"rep_jodey_arrington","target":"u_s_house_of_representatives","label":"serves in"},{"id":"rel_1axeejn","source":"rep_jodey_arrington","target":"house_committee_on_the_budget","label":"chairs"},{"id":"rel_eqj9i6","source":"rep_jodey_arrington","target":"h_r_1_reconciliation_pursuant_to_h_con_res_14","label":"sponsored"},{"id":"rel_1lz3a8u","source":"h_r_1_reconciliation_pursuant_to_h_con_res_14","target":"house_committee_on_the_budget","label":"referred to"},{"id":"rel_1jkltq","source":"h_r_1_reconciliation_pursuant_to_h_con_res_14","target":"public_law_119_21","label":"became"},{"id":"rel_1pv73tn","source":"house_committee_on_the_budget","target":"u_s_house_of_representatives","label":"committee of"},{"id":"event_61eca9_rep_jodey_arrington","source":"rep_jodey_arrington","target":"event_node_event_61eca9","label":"participated in"},{"id":"event_61eca9_h_r_1_reconciliation_pursuant_to_h_con_res_14","source":"event_node_event_61eca9","target":"h_r_1_reconciliation_pursuant_to_h_con_res_14","label":"at"},{"id":"event_j5prdo_h_r_1_reconciliation_pursuant_to_h_con_res_14","source":"h_r_1_reconciliation_pursuant_to_h_con_res_14","target":"event_node_event_j5prdo","label":"participated in"},{"id":"event_j5prdo_public_law_119_21","source":"event_node_event_j5prdo","target":"public_law_119_21","label":"at"}]};
     const typeColor = {
       person: "var(--person)",
       org: "var(--org)",
@@ -775,24 +620,3 @@ function renderChartHtml(data: ChartData): string {
   </script>
 </body>
 </html>
-`;
-}
-
-function escapeHtml(value: string): string {
-  return value.replace(/[&<>"']/g, (char) => {
-    switch (char) {
-      case "&":
-        return "&amp;";
-      case "<":
-        return "&lt;";
-      case ">":
-        return "&gt;";
-      case '"':
-        return "&quot;";
-      case "'":
-        return "&#39;";
-      default:
-        return char;
-    }
-  });
-}

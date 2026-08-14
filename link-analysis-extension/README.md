@@ -58,6 +58,26 @@ Files:
 - `examples/congress-demo.link.md`
 - `examples/congress-demo.graph.json`
 
+It also includes a narrow real-data Congress seed with source URLs embedded in the `.link.md` file:
+
+```bash
+cd examples/real-congress
+savi graph
+savi validate
+savi dossier "Rep. Alexandria Ocasio-Cortez"
+savi dossier "Rep. Jodey Arrington"
+savi chart "Rep. Alexandria Ocasio-Cortez" --out aoc-chart.html
+savi chart "H.R.1 - Reconciliation pursuant to H. Con. Res. 14" --out hr1-chart.html
+```
+
+Files:
+
+- `examples/real-congress/congress-real.link.md`
+- `examples/real-congress/congress-real.graph.json`
+- `examples/real-congress/aoc-chart.html`
+- `examples/real-congress/hr1-chart.html`
+- `examples/real-congress/congress-real-chart.html`
+
 ## Generic Commands
 
 ```bash

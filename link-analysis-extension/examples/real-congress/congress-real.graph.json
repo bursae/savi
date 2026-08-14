@@ -1,0 +1,618 @@
+{
+  "entities": [
+    {
+      "id": "u_s_house_of_representatives",
+      "name": "U.S. House of Representatives",
+      "type": "org",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/real-congress/congress-real.link.md",
+      "line": 20
+    },
+    {
+      "id": "u_s_senate",
+      "name": "U.S. Senate",
+      "type": "org",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/real-congress/congress-real.link.md",
+      "line": 21
+    },
+    {
+      "id": "democratic_party",
+      "name": "Democratic Party",
+      "type": "org",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/real-congress/congress-real.link.md",
+      "line": 22
+    },
+    {
+      "id": "republican_party",
+      "name": "Republican Party",
+      "type": "org",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/real-congress/congress-real.link.md",
+      "line": 23
+    },
+    {
+      "id": "house_democratic_caucus",
+      "name": "House Democratic Caucus",
+      "type": "org",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/real-congress/congress-real.link.md",
+      "line": 24
+    },
+    {
+      "id": "house_republican_conference",
+      "name": "House Republican Conference",
+      "type": "org",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/real-congress/congress-real.link.md",
+      "line": 25
+    },
+    {
+      "id": "house_committee_on_energy_and_commerce",
+      "name": "House Committee on Energy and Commerce",
+      "type": "org",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/real-congress/congress-real.link.md",
+      "line": 26
+    },
+    {
+      "id": "energy_subcommittee",
+      "name": "Energy Subcommittee",
+      "type": "org",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/real-congress/congress-real.link.md",
+      "line": 27
+    },
+    {
+      "id": "health_subcommittee",
+      "name": "Health Subcommittee",
+      "type": "org",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/real-congress/congress-real.link.md",
+      "line": 28
+    },
+    {
+      "id": "oversight_and_investigations_subcommittee",
+      "name": "Oversight and Investigations Subcommittee",
+      "type": "org",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/real-congress/congress-real.link.md",
+      "line": 29
+    },
+    {
+      "id": "house_committee_on_the_budget",
+      "name": "House Committee on the Budget",
+      "type": "org",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/real-congress/congress-real.link.md",
+      "line": 30
+    },
+    {
+      "id": "senate_committee_on_finance",
+      "name": "Senate Committee on Finance",
+      "type": "org",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/real-congress/congress-real.link.md",
+      "line": 31
+    },
+    {
+      "id": "senate_committee_on_health_education_labor_and_pensions",
+      "name": "Senate Committee on Health, Education, Labor, and Pensions",
+      "type": "org",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/real-congress/congress-real.link.md",
+      "line": 32
+    },
+    {
+      "id": "senate_committee_on_environment_and_public_works",
+      "name": "Senate Committee on Environment and Public Works",
+      "type": "org",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/real-congress/congress-real.link.md",
+      "line": 33
+    },
+    {
+      "id": "senate_committee_on_the_budget",
+      "name": "Senate Committee on the Budget",
+      "type": "org",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/real-congress/congress-real.link.md",
+      "line": 34
+    },
+    {
+      "id": "senate_committee_on_commerce_science_and_transportation",
+      "name": "Senate Committee on Commerce, Science, and Transportation",
+      "type": "org",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/real-congress/congress-real.link.md",
+      "line": 35
+    },
+    {
+      "id": "ny_14",
+      "name": "NY-14",
+      "type": "place",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/real-congress/congress-real.link.md",
+      "line": 37
+    },
+    {
+      "id": "ny_08",
+      "name": "NY-08",
+      "type": "place",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/real-congress/congress-real.link.md",
+      "line": 38
+    },
+    {
+      "id": "la_04",
+      "name": "LA-04",
+      "type": "place",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/real-congress/congress-real.link.md",
+      "line": 39
+    },
+    {
+      "id": "tx_19",
+      "name": "TX-19",
+      "type": "place",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/real-congress/congress-real.link.md",
+      "line": 40
+    },
+    {
+      "id": "vermont",
+      "name": "Vermont",
+      "type": "place",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/real-congress/congress-real.link.md",
+      "line": 41
+    },
+    {
+      "id": "capitol_hill",
+      "name": "Capitol Hill",
+      "type": "place",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/real-congress/congress-real.link.md",
+      "line": 42
+    },
+    {
+      "id": "rep_alexandria_ocasio_cortez",
+      "name": "Rep. Alexandria Ocasio-Cortez",
+      "type": "person",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/real-congress/congress-real.link.md",
+      "line": 44
+    },
+    {
+      "id": "rep_hakeem_jeffries",
+      "name": "Rep. Hakeem Jeffries",
+      "type": "person",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/real-congress/congress-real.link.md",
+      "line": 45
+    },
+    {
+      "id": "rep_mike_johnson",
+      "name": "Rep. Mike Johnson",
+      "type": "person",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/real-congress/congress-real.link.md",
+      "line": 46
+    },
+    {
+      "id": "rep_jodey_arrington",
+      "name": "Rep. Jodey Arrington",
+      "type": "person",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/real-congress/congress-real.link.md",
+      "line": 47
+    },
+    {
+      "id": "sen_bernard_sanders",
+      "name": "Sen. Bernard Sanders",
+      "type": "person",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/real-congress/congress-real.link.md",
+      "line": 48
+    },
+    {
+      "id": "h_r_1_reconciliation_pursuant_to_h_con_res_14",
+      "name": "H.R.1 - Reconciliation pursuant to H. Con. Res. 14",
+      "type": "asset",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/real-congress/congress-real.link.md",
+      "line": 50
+    },
+    {
+      "id": "public_law_119_21",
+      "name": "Public Law 119-21",
+      "type": "asset",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/real-congress/congress-real.link.md",
+      "line": 51
+    },
+    {
+      "id": "h_r_3562_defiance_act_of_2025",
+      "name": "H.R.3562 - DEFIANCE Act of 2025",
+      "type": "asset",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/real-congress/congress-real.link.md",
+      "line": 52
+    },
+    {
+      "id": "h_r_3302_healthy_start_reauthorization_act_of_2025",
+      "name": "H.R.3302 - Healthy Start Reauthorization Act of 2025",
+      "type": "asset",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/real-congress/congress-real.link.md",
+      "line": 53
+    },
+    {
+      "id": "h_r_1944_10_percent_credit_card_interest_rate_cap_act",
+      "name": "H.R.1944 - 10 Percent Credit Card Interest Rate Cap Act",
+      "type": "asset",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/real-congress/congress-real.link.md",
+      "line": 54
+    },
+    {
+      "id": "house_roll_call_vote_2_speaker_election_2025",
+      "name": "House Roll Call Vote 2 - Speaker Election 2025",
+      "type": "asset",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/real-congress/congress-real.link.md",
+      "line": 55
+    }
+  ],
+  "relationships": [
+    {
+      "id": "rel_1r90kg8",
+      "sourceId": "rep_alexandria_ocasio_cortez",
+      "targetId": "democratic_party",
+      "label": "member of",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/real-congress/congress-real.link.md",
+      "line": 57
+    },
+    {
+      "id": "rel_i0pfa1",
+      "sourceId": "rep_alexandria_ocasio_cortez",
+      "targetId": "ny_14",
+      "label": "represents district",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/real-congress/congress-real.link.md",
+      "line": 58
+    },
+    {
+      "id": "rel_l11hf8",
+      "sourceId": "rep_alexandria_ocasio_cortez",
+      "targetId": "u_s_house_of_representatives",
+      "label": "serves in",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/real-congress/congress-real.link.md",
+      "line": 59
+    },
+    {
+      "id": "rel_2k53c3",
+      "sourceId": "rep_alexandria_ocasio_cortez",
+      "targetId": "house_committee_on_energy_and_commerce",
+      "label": "member of",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/real-congress/congress-real.link.md",
+      "line": 60
+    },
+    {
+      "id": "rel_1h6hg7b",
+      "sourceId": "rep_alexandria_ocasio_cortez",
+      "targetId": "energy_subcommittee",
+      "label": "appointed to",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/real-congress/congress-real.link.md",
+      "line": 61
+    },
+    {
+      "id": "rel_1o2xzt2",
+      "sourceId": "rep_alexandria_ocasio_cortez",
+      "targetId": "health_subcommittee",
+      "label": "appointed to",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/real-congress/congress-real.link.md",
+      "line": 62
+    },
+    {
+      "id": "rel_2uwujw",
+      "sourceId": "rep_alexandria_ocasio_cortez",
+      "targetId": "oversight_and_investigations_subcommittee",
+      "label": "appointed to",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/real-congress/congress-real.link.md",
+      "line": 63
+    },
+    {
+      "id": "rel_1jy4nd7",
+      "sourceId": "rep_alexandria_ocasio_cortez",
+      "targetId": "h_r_3562_defiance_act_of_2025",
+      "label": "sponsored",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/real-congress/congress-real.link.md",
+      "line": 64
+    },
+    {
+      "id": "rel_1crpmxi",
+      "sourceId": "rep_alexandria_ocasio_cortez",
+      "targetId": "h_r_3302_healthy_start_reauthorization_act_of_2025",
+      "label": "sponsored",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/real-congress/congress-real.link.md",
+      "line": 65
+    },
+    {
+      "id": "rel_1msvgmj",
+      "sourceId": "rep_alexandria_ocasio_cortez",
+      "targetId": "h_r_1944_10_percent_credit_card_interest_rate_cap_act",
+      "label": "sponsored",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/real-congress/congress-real.link.md",
+      "line": 66
+    },
+    {
+      "id": "rel_1w4iky2",
+      "sourceId": "rep_hakeem_jeffries",
+      "targetId": "democratic_party",
+      "label": "member of",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/real-congress/congress-real.link.md",
+      "line": 68
+    },
+    {
+      "id": "rel_rd77kq",
+      "sourceId": "rep_hakeem_jeffries",
+      "targetId": "ny_08",
+      "label": "represents district",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/real-congress/congress-real.link.md",
+      "line": 69
+    },
+    {
+      "id": "rel_ud65a3",
+      "sourceId": "rep_hakeem_jeffries",
+      "targetId": "u_s_house_of_representatives",
+      "label": "serves in",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/real-congress/congress-real.link.md",
+      "line": 70
+    },
+    {
+      "id": "rel_13m9dbe",
+      "sourceId": "rep_hakeem_jeffries",
+      "targetId": "house_democratic_caucus",
+      "label": "leads",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/real-congress/congress-real.link.md",
+      "line": 71
+    },
+    {
+      "id": "rel_1fi7a9q",
+      "sourceId": "rep_hakeem_jeffries",
+      "targetId": "u_s_house_of_representatives",
+      "label": "Minority Leader",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/real-congress/congress-real.link.md",
+      "line": 72
+    },
+    {
+      "id": "rel_837m51",
+      "sourceId": "rep_mike_johnson",
+      "targetId": "republican_party",
+      "label": "member of",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/real-congress/congress-real.link.md",
+      "line": 74
+    },
+    {
+      "id": "rel_o2ylsb",
+      "sourceId": "rep_mike_johnson",
+      "targetId": "la_04",
+      "label": "represents district",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/real-congress/congress-real.link.md",
+      "line": 75
+    },
+    {
+      "id": "rel_1f2tf1z",
+      "sourceId": "rep_mike_johnson",
+      "targetId": "u_s_house_of_representatives",
+      "label": "serves in",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/real-congress/congress-real.link.md",
+      "line": 76
+    },
+    {
+      "id": "rel_1qz7zfm",
+      "sourceId": "rep_mike_johnson",
+      "targetId": "house_republican_conference",
+      "label": "member of",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/real-congress/congress-real.link.md",
+      "line": 77
+    },
+    {
+      "id": "rel_d09w6j",
+      "sourceId": "rep_mike_johnson",
+      "targetId": "u_s_house_of_representatives",
+      "label": "Speaker",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/real-congress/congress-real.link.md",
+      "line": 78
+    },
+    {
+      "id": "rel_16kyeq",
+      "sourceId": "rep_jodey_arrington",
+      "targetId": "republican_party",
+      "label": "member of",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/real-congress/congress-real.link.md",
+      "line": 80
+    },
+    {
+      "id": "rel_1w9n167",
+      "sourceId": "rep_jodey_arrington",
+      "targetId": "tx_19",
+      "label": "represents district",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/real-congress/congress-real.link.md",
+      "line": 81
+    },
+    {
+      "id": "rel_107vnvq",
+      "sourceId": "rep_jodey_arrington",
+      "targetId": "u_s_house_of_representatives",
+      "label": "serves in",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/real-congress/congress-real.link.md",
+      "line": 82
+    },
+    {
+      "id": "rel_1axeejn",
+      "sourceId": "rep_jodey_arrington",
+      "targetId": "house_committee_on_the_budget",
+      "label": "chairs",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/real-congress/congress-real.link.md",
+      "line": 83
+    },
+    {
+      "id": "rel_eqj9i6",
+      "sourceId": "rep_jodey_arrington",
+      "targetId": "h_r_1_reconciliation_pursuant_to_h_con_res_14",
+      "label": "sponsored",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/real-congress/congress-real.link.md",
+      "line": 84
+    },
+    {
+      "id": "rel_1lz3a8u",
+      "sourceId": "h_r_1_reconciliation_pursuant_to_h_con_res_14",
+      "targetId": "house_committee_on_the_budget",
+      "label": "referred to",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/real-congress/congress-real.link.md",
+      "line": 85
+    },
+    {
+      "id": "rel_1jkltq",
+      "sourceId": "h_r_1_reconciliation_pursuant_to_h_con_res_14",
+      "targetId": "public_law_119_21",
+      "label": "became",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/real-congress/congress-real.link.md",
+      "line": 86
+    },
+    {
+      "id": "rel_diydz1",
+      "sourceId": "sen_bernard_sanders",
+      "targetId": "vermont",
+      "label": "represents state",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/real-congress/congress-real.link.md",
+      "line": 88
+    },
+    {
+      "id": "rel_1uwc2pe",
+      "sourceId": "sen_bernard_sanders",
+      "targetId": "u_s_senate",
+      "label": "serves in",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/real-congress/congress-real.link.md",
+      "line": 89
+    },
+    {
+      "id": "rel_1ygm9q6",
+      "sourceId": "sen_bernard_sanders",
+      "targetId": "senate_committee_on_finance",
+      "label": "member of",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/real-congress/congress-real.link.md",
+      "line": 90
+    },
+    {
+      "id": "rel_jpdlpk",
+      "sourceId": "sen_bernard_sanders",
+      "targetId": "senate_committee_on_health_education_labor_and_pensions",
+      "label": "Ranking Member",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/real-congress/congress-real.link.md",
+      "line": 91
+    },
+    {
+      "id": "rel_m29xzv",
+      "sourceId": "sen_bernard_sanders",
+      "targetId": "senate_committee_on_environment_and_public_works",
+      "label": "member of",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/real-congress/congress-real.link.md",
+      "line": 92
+    },
+    {
+      "id": "rel_ljgh9r",
+      "sourceId": "sen_bernard_sanders",
+      "targetId": "senate_committee_on_the_budget",
+      "label": "member of",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/real-congress/congress-real.link.md",
+      "line": 93
+    },
+    {
+      "id": "rel_dkt8hu",
+      "sourceId": "sen_bernard_sanders",
+      "targetId": "senate_committee_on_commerce_science_and_transportation",
+      "label": "member of",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/real-congress/congress-real.link.md",
+      "line": 94
+    },
+    {
+      "id": "rel_1yy4bwg",
+      "sourceId": "house_committee_on_energy_and_commerce",
+      "targetId": "u_s_house_of_representatives",
+      "label": "committee of",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/real-congress/congress-real.link.md",
+      "line": 96
+    },
+    {
+      "id": "rel_1pv73tn",
+      "sourceId": "house_committee_on_the_budget",
+      "targetId": "u_s_house_of_representatives",
+      "label": "committee of",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/real-congress/congress-real.link.md",
+      "line": 97
+    },
+    {
+      "id": "rel_1hcoe3i",
+      "sourceId": "house_democratic_caucus",
+      "targetId": "democratic_party",
+      "label": "caucus of",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/real-congress/congress-real.link.md",
+      "line": 98
+    },
+    {
+      "id": "rel_kazjfz",
+      "sourceId": "house_republican_conference",
+      "targetId": "republican_party",
+      "label": "conference of",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/real-congress/congress-real.link.md",
+      "line": 99
+    },
+    {
+      "id": "rel_1k02odp",
+      "sourceId": "senate_committee_on_finance",
+      "targetId": "u_s_senate",
+      "label": "committee of",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/real-congress/congress-real.link.md",
+      "line": 100
+    },
+    {
+      "id": "rel_ok162w",
+      "sourceId": "senate_committee_on_health_education_labor_and_pensions",
+      "targetId": "u_s_senate",
+      "label": "committee of",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/real-congress/congress-real.link.md",
+      "line": 101
+    },
+    {
+      "id": "rel_ddmro6",
+      "sourceId": "senate_committee_on_environment_and_public_works",
+      "targetId": "u_s_senate",
+      "label": "committee of",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/real-congress/congress-real.link.md",
+      "line": 102
+    },
+    {
+      "id": "rel_1yi9o4w",
+      "sourceId": "senate_committee_on_the_budget",
+      "targetId": "u_s_senate",
+      "label": "committee of",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/real-congress/congress-real.link.md",
+      "line": 103
+    },
+    {
+      "id": "rel_uah5fl",
+      "sourceId": "senate_committee_on_commerce_science_and_transportation",
+      "targetId": "u_s_senate",
+      "label": "committee of",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/real-congress/congress-real.link.md",
+      "line": 104
+    }
+  ],
+  "events": [
+    {
+      "id": "event_d2oty8",
+      "date": "2025-01-03",
+      "label": "Speaker election",
+      "participants": [
+        "Rep. Mike Johnson",
+        "Rep. Hakeem Jeffries",
+        "House Roll Call Vote 2 - Speaker Election 2025"
+      ],
+      "location": "Capitol Hill",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/real-congress/congress-real.link.md",
+      "line": 106
+    },
+    {
+      "id": "event_61eca9",
+      "date": "2025-05-20",
+      "label": "introduced",
+      "participants": [
+        "Rep. Jodey Arrington"
+      ],
+      "location": "H.R.1 - Reconciliation pursuant to H. Con. Res. 14",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/real-congress/congress-real.link.md",
+      "line": 107
+    },
+    {
+      "id": "event_j5prdo",
+      "date": "2025-07-04",
+      "label": "became law",
+      "participants": [
+        "H.R.1 - Reconciliation pursuant to H. Con. Res. 14"
+      ],
+      "location": "Public Law 119-21",
+      "filePath": "/Users/anthonybursae/Documents/GitHub/savi/link-analysis-extension/examples/real-congress/congress-real.link.md",
+      "line": 108
+    }
+  ]
+}

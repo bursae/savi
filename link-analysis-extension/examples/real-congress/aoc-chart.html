@@ -1,164 +1,9 @@
-import * as fs from "fs/promises";
-import * as path from "path";
-import { Entity, EventRecord, GraphModel, Relationship } from "../models/types";
-
-interface ChartNode {
-  id: string;
-  label: string;
-  type: Entity["type"] | "event";
-  subtitle?: string;
-  focus?: boolean;
-}
-
-interface ChartEdge {
-  id: string;
-  source: string;
-  target: string;
-  label: string;
-}
-
-interface ChartData {
-  title: string;
-  focusName?: string;
-  nodes: ChartNode[];
-  edges: ChartEdge[];
-}
-
-export interface ChartOptions {
-  focusName?: string;
-  depth: number;
-  outputPath: string;
-}
-
-export async function exportChart(caseDir: string, graph: GraphModel, options: ChartOptions): Promise<string> {
-  const chartData = buildChartData(graph, options.focusName, options.depth);
-  const resolvedOutputPath = path.resolve(caseDir, options.outputPath);
-  await fs.mkdir(path.dirname(resolvedOutputPath), { recursive: true });
-  await fs.writeFile(resolvedOutputPath, renderChartHtml(chartData), "utf8");
-  return resolvedOutputPath;
-}
-
-function buildChartData(graph: GraphModel, focusName: string | undefined, depth: number): ChartData {
-  const entityByName = new Map(graph.entities.map((entity) => [entity.name, entity]));
-  const eventNodes = graph.events.map(eventToNode);
-  const eventEdges = graph.events.flatMap((event) => eventToEdges(event, entityByName));
-  const baseNodes: ChartNode[] = [
-    ...graph.entities.map((entity) => ({
-      id: entity.id,
-      label: entity.name,
-      type: entity.type,
-      subtitle: entity.type
-    })),
-    ...eventNodes
-  ];
-  const baseEdges: ChartEdge[] = [
-    ...graph.relationships.map((relationship) => ({
-      id: relationship.id,
-      source: relationship.sourceId,
-      target: relationship.targetId,
-      label: relationship.label
-    })),
-    ...eventEdges
-  ];
-
-  if (!focusName) {
-    return {
-      title: "Savi Case Chart",
-      nodes: baseNodes,
-      edges: baseEdges
-    };
-  }
-
-  const focusEntity = graph.entities.find((entity) => entity.name.toLowerCase() === focusName.toLowerCase());
-  if (!focusEntity) {
-    throw new Error(`No entity found named "${focusName}".`);
-  }
-
-  const includedIds = collectNeighborhoodIds(focusEntity.id, baseEdges, Math.max(depth, 1));
-  const nodes = baseNodes
-    .filter((node) => includedIds.has(node.id))
-    .map((node) => ({ ...node, focus: node.id === focusEntity.id }));
-  const edges = baseEdges.filter((edge) => includedIds.has(edge.source) && includedIds.has(edge.target));
-
-  return {
-    title: `${focusEntity.name} - Savi Chart`,
-    focusName: focusEntity.name,
-    nodes,
-    edges
-  };
-}
-
-function collectNeighborhoodIds(focusId: string, edges: ChartEdge[], depth: number): Set<string> {
-  const included = new Set<string>([focusId]);
-  let frontier = new Set<string>([focusId]);
-
-  for (let step = 0; step < depth; step += 1) {
-    const next = new Set<string>();
-    for (const edge of edges) {
-      if (frontier.has(edge.source) && !included.has(edge.target)) {
-        next.add(edge.target);
-      }
-      if (frontier.has(edge.target) && !included.has(edge.source)) {
-        next.add(edge.source);
-      }
-    }
-    next.forEach((id) => included.add(id));
-    frontier = next;
-  }
-
-  return included;
-}
-
-function eventToNode(event: EventRecord): ChartNode {
-  return {
-    id: `event_node_${event.id}`,
-    label: event.label,
-    type: "event",
-    subtitle: event.date
-  };
-}
-
-function eventToEdges(event: EventRecord, entityByName: Map<string, Entity>): ChartEdge[] {
-  const eventNodeId = `event_node_${event.id}`;
-  const participantEdges = event.participants.flatMap((participant) => {
-    const entity = entityByName.get(participant);
-    if (!entity) {
-      return [];
-    }
-    return [
-      {
-        id: `${event.id}_${entity.id}`,
-        source: entity.id,
-        target: eventNodeId,
-        label: "participated in"
-      }
-    ];
-  });
-
-  const location = event.location ? entityByName.get(event.location) : undefined;
-  if (!location) {
-    return participantEdges;
-  }
-
-  return [
-    ...participantEdges,
-    {
-      id: `${event.id}_${location.id}`,
-      source: eventNodeId,
-      target: location.id,
-      label: "at"
-    }
-  ];
-}
-
-function renderChartHtml(data: ChartData): string {
-  const encodedData = JSON.stringify(data).replace(/</g, "\\u003c");
-  return `<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>${escapeHtml(data.title)}</title>
+  <title>Rep. Alexandria Ocasio-Cortez - Savi Chart</title>
   <style>
     :root {
       color-scheme: light;
@@ -401,8 +246,8 @@ function renderChartHtml(data: ChartData): string {
 <body>
   <header>
     <div>
-      <h1>${escapeHtml(data.title)}</h1>
-      <div class="meta">${data.nodes.length} nodes · ${data.edges.length} links${data.focusName ? ` · focused on ${escapeHtml(data.focusName)}` : ""}</div>
+      <h1>Rep. Alexandria Ocasio-Cortez - Savi Chart</h1>
+      <div class="meta">16 nodes · 21 links · focused on Rep. Alexandria Ocasio-Cortez</div>
     </div>
     <div class="legend">
       <span><i class="swatch" style="--color: var(--person)"></i>Person</span>
@@ -427,7 +272,7 @@ function renderChartHtml(data: ChartData): string {
   <svg id="chart" role="img" aria-label="Savi network chart"></svg>
   <div class="tooltip" id="tooltip"></div>
   <script>
-    const chartData = ${encodedData};
+    const chartData = {"title":"Rep. Alexandria Ocasio-Cortez - Savi Chart","focusName":"Rep. Alexandria Ocasio-Cortez","nodes":[{"id":"u_s_house_of_representatives","label":"U.S. House of Representatives","type":"org","subtitle":"org","focus":false},{"id":"democratic_party","label":"Democratic Party","type":"org","subtitle":"org","focus":false},{"id":"house_democratic_caucus","label":"House Democratic Caucus","type":"org","subtitle":"org","focus":false},{"id":"house_committee_on_energy_and_commerce","label":"House Committee on Energy and Commerce","type":"org","subtitle":"org","focus":false},{"id":"energy_subcommittee","label":"Energy Subcommittee","type":"org","subtitle":"org","focus":false},{"id":"health_subcommittee","label":"Health Subcommittee","type":"org","subtitle":"org","focus":false},{"id":"oversight_and_investigations_subcommittee","label":"Oversight and Investigations Subcommittee","type":"org","subtitle":"org","focus":false},{"id":"house_committee_on_the_budget","label":"House Committee on the Budget","type":"org","subtitle":"org","focus":false},{"id":"ny_14","label":"NY-14","type":"place","subtitle":"place","focus":false},{"id":"rep_alexandria_ocasio_cortez","label":"Rep. Alexandria Ocasio-Cortez","type":"person","subtitle":"person","focus":true},{"id":"rep_hakeem_jeffries","label":"Rep. Hakeem Jeffries","type":"person","subtitle":"person","focus":false},{"id":"rep_mike_johnson","label":"Rep. Mike Johnson","type":"person","subtitle":"person","focus":false},{"id":"rep_jodey_arrington","label":"Rep. Jodey Arrington","type":"person","subtitle":"person","focus":false},{"id":"h_r_3562_defiance_act_of_2025","label":"H.R.3562 - DEFIANCE Act of 2025","type":"asset","subtitle":"asset","focus":false},{"id":"h_r_3302_healthy_start_reauthorization_act_of_2025","label":"H.R.3302 - Healthy Start Reauthorization Act of 2025","type":"asset","subtitle":"asset","focus":false},{"id":"h_r_1944_10_percent_credit_card_interest_rate_cap_act","label":"H.R.1944 - 10 Percent Credit Card Interest Rate Cap Act","type":"asset","subtitle":"asset","focus":false}],"edges":[{"id":"rel_1r90kg8","source":"rep_alexandria_ocasio_cortez","target":"democratic_party","label":"member of"},{"id":"rel_i0pfa1","source":"rep_alexandria_ocasio_cortez","target":"ny_14","label":"represents district"},{"id":"rel_l11hf8","source":"rep_alexandria_ocasio_cortez","target":"u_s_house_of_representatives","label":"serves in"},{"id":"rel_2k53c3","source":"rep_alexandria_ocasio_cortez","target":"house_committee_on_energy_and_commerce","label":"member of"},{"id":"rel_1h6hg7b","source":"rep_alexandria_ocasio_cortez","target":"energy_subcommittee","label":"appointed to"},{"id":"rel_1o2xzt2","source":"rep_alexandria_ocasio_cortez","target":"health_subcommittee","label":"appointed to"},{"id":"rel_2uwujw","source":"rep_alexandria_ocasio_cortez","target":"oversight_and_investigations_subcommittee","label":"appointed to"},{"id":"rel_1jy4nd7","source":"rep_alexandria_ocasio_cortez","target":"h_r_3562_defiance_act_of_2025","label":"sponsored"},{"id":"rel_1crpmxi","source":"rep_alexandria_ocasio_cortez","target":"h_r_3302_healthy_start_reauthorization_act_of_2025","label":"sponsored"},{"id":"rel_1msvgmj","source":"rep_alexandria_ocasio_cortez","target":"h_r_1944_10_percent_credit_card_interest_rate_cap_act","label":"sponsored"},{"id":"rel_1w4iky2","source":"rep_hakeem_jeffries","target":"democratic_party","label":"member of"},{"id":"rel_ud65a3","source":"rep_hakeem_jeffries","target":"u_s_house_of_representatives","label":"serves in"},{"id":"rel_13m9dbe","source":"rep_hakeem_jeffries","target":"house_democratic_caucus","label":"leads"},{"id":"rel_1fi7a9q","source":"rep_hakeem_jeffries","target":"u_s_house_of_representatives","label":"Minority Leader"},{"id":"rel_1f2tf1z","source":"rep_mike_johnson","target":"u_s_house_of_representatives","label":"serves in"},{"id":"rel_d09w6j","source":"rep_mike_johnson","target":"u_s_house_of_representatives","label":"Speaker"},{"id":"rel_107vnvq","source":"rep_jodey_arrington","target":"u_s_house_of_representatives","label":"serves in"},{"id":"rel_1axeejn","source":"rep_jodey_arrington","target":"house_committee_on_the_budget","label":"chairs"},{"id":"rel_1yy4bwg","source":"house_committee_on_energy_and_commerce","target":"u_s_house_of_representatives","label":"committee of"},{"id":"rel_1pv73tn","source":"house_committee_on_the_budget","target":"u_s_house_of_representatives","label":"committee of"},{"id":"rel_1hcoe3i","source":"house_democratic_caucus","target":"democratic_party","label":"caucus of"}]};
     const typeColor = {
       person: "var(--person)",
       org: "var(--org)",
@@ -775,24 +620,3 @@ function renderChartHtml(data: ChartData): string {
   </script>
 </body>
 </html>
-`;
-}
-
-function escapeHtml(value: string): string {
-  return value.replace(/[&<>"']/g, (char) => {
-    switch (char) {
-      case "&":
-        return "&amp;";
-      case "<":
-        return "&lt;";
-      case ">":
-        return "&gt;";
-      case '"':
-        return "&quot;";
-      case "'":
-        return "&#39;";
-      default:
-        return char;
-    }
-  });
-}

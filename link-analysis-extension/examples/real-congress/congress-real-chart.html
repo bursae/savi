@@ -1,164 +1,9 @@
-import * as fs from "fs/promises";
-import * as path from "path";
-import { Entity, EventRecord, GraphModel, Relationship } from "../models/types";
-
-interface ChartNode {
-  id: string;
-  label: string;
-  type: Entity["type"] | "event";
-  subtitle?: string;
-  focus?: boolean;
-}
-
-interface ChartEdge {
-  id: string;
-  source: string;
-  target: string;
-  label: string;
-}
-
-interface ChartData {
-  title: string;
-  focusName?: string;
-  nodes: ChartNode[];
-  edges: ChartEdge[];
-}
-
-export interface ChartOptions {
-  focusName?: string;
-  depth: number;
-  outputPath: string;
-}
-
-export async function exportChart(caseDir: string, graph: GraphModel, options: ChartOptions): Promise<string> {
-  const chartData = buildChartData(graph, options.focusName, options.depth);
-  const resolvedOutputPath = path.resolve(caseDir, options.outputPath);
-  await fs.mkdir(path.dirname(resolvedOutputPath), { recursive: true });
-  await fs.writeFile(resolvedOutputPath, renderChartHtml(chartData), "utf8");
-  return resolvedOutputPath;
-}
-
-function buildChartData(graph: GraphModel, focusName: string | undefined, depth: number): ChartData {
-  const entityByName = new Map(graph.entities.map((entity) => [entity.name, entity]));
-  const eventNodes = graph.events.map(eventToNode);
-  const eventEdges = graph.events.flatMap((event) => eventToEdges(event, entityByName));
-  const baseNodes: ChartNode[] = [
-    ...graph.entities.map((entity) => ({
-      id: entity.id,
-      label: entity.name,
-      type: entity.type,
-      subtitle: entity.type
-    })),
-    ...eventNodes
-  ];
-  const baseEdges: ChartEdge[] = [
-    ...graph.relationships.map((relationship) => ({
-      id: relationship.id,
-      source: relationship.sourceId,
-      target: relationship.targetId,
-      label: relationship.label
-    })),
-    ...eventEdges
-  ];
-
-  if (!focusName) {
-    return {
-      title: "Savi Case Chart",
-      nodes: baseNodes,
-      edges: baseEdges
-    };
-  }
-
-  const focusEntity = graph.entities.find((entity) => entity.name.toLowerCase() === focusName.toLowerCase());
-  if (!focusEntity) {
-    throw new Error(`No entity found named "${focusName}".`);
-  }
-
-  const includedIds = collectNeighborhoodIds(focusEntity.id, baseEdges, Math.max(depth, 1));
-  const nodes = baseNodes
-    .filter((node) => includedIds.has(node.id))
-    .map((node) => ({ ...node, focus: node.id === focusEntity.id }));
-  const edges = baseEdges.filter((edge) => includedIds.has(edge.source) && includedIds.has(edge.target));
-
-  return {
-    title: `${focusEntity.name} - Savi Chart`,
-    focusName: focusEntity.name,
-    nodes,
-    edges
-  };
-}
-
-function collectNeighborhoodIds(focusId: string, edges: ChartEdge[], depth: number): Set<string> {
-  const included = new Set<string>([focusId]);
-  let frontier = new Set<string>([focusId]);
-
-  for (let step = 0; step < depth; step += 1) {
-    const next = new Set<string>();
-    for (const edge of edges) {
-      if (frontier.has(edge.source) && !included.has(edge.target)) {
-        next.add(edge.target);
-      }
-      if (frontier.has(edge.target) && !included.has(edge.source)) {
-        next.add(edge.source);
-      }
-    }
-    next.forEach((id) => included.add(id));
-    frontier = next;
-  }
-
-  return included;
-}
-
-function eventToNode(event: EventRecord): ChartNode {
-  return {
-    id: `event_node_${event.id}`,
-    label: event.label,
-    type: "event",
-    subtitle: event.date
-  };
-}
-
-function eventToEdges(event: EventRecord, entityByName: Map<string, Entity>): ChartEdge[] {
-  const eventNodeId = `event_node_${event.id}`;
-  const participantEdges = event.participants.flatMap((participant) => {
-    const entity = entityByName.get(participant);
-    if (!entity) {
-      return [];
-    }
-    return [
-      {
-        id: `${event.id}_${entity.id}`,
-        source: entity.id,
-        target: eventNodeId,
-        label: "participated in"
-      }
-    ];
-  });
-
-  const location = event.location ? entityByName.get(event.location) : undefined;
-  if (!location) {
-    return participantEdges;
-  }
-
-  return [
-    ...participantEdges,
-    {
-      id: `${event.id}_${location.id}`,
-      source: eventNodeId,
-      target: location.id,
-      label: "at"
-    }
-  ];
-}
-
-function renderChartHtml(data: ChartData): string {
-  const encodedData = JSON.stringify(data).replace(/</g, "\\u003c");
-  return `<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>${escapeHtml(data.title)}</title>
+  <title>Savi Case Chart</title>
   <style>
     :root {
       color-scheme: light;
@@ -401,8 +246,8 @@ function renderChartHtml(data: ChartData): string {
 <body>
   <header>
     <div>
-      <h1>${escapeHtml(data.title)}</h1>
-      <div class="meta">${data.nodes.length} nodes · ${data.edges.length} links${data.focusName ? ` · focused on ${escapeHtml(data.focusName)}` : ""}</div>
+      <h1>Savi Case Chart</h1>
+      <div class="meta">36 nodes · 51 links</div>
     </div>
     <div class="legend">
       <span><i class="swatch" style="--color: var(--person)"></i>Person</span>
@@ -427,7 +272,7 @@ function renderChartHtml(data: ChartData): string {
   <svg id="chart" role="img" aria-label="Savi network chart"></svg>
   <div class="tooltip" id="tooltip"></div>
   <script>
-    const chartData = ${encodedData};
+    const chartData = {"title":"Savi Case Chart","nodes":[{"id":"u_s_house_of_representatives","label":"U.S. House of Representatives","type":"org","subtitle":"org"},{"id":"u_s_senate","label":"U.S. Senate","type":"org","subtitle":"org"},{"id":"democratic_party","label":"Democratic Party","type":"org","subtitle":"org"},{"id":"republican_party","label":"Republican Party","type":"org","subtitle":"org"},{"id":"house_democratic_caucus","label":"House Democratic Caucus","type":"org","subtitle":"org"},{"id":"house_republican_conference","label":"House Republican Conference","type":"org","subtitle":"org"},{"id":"house_committee_on_energy_and_commerce","label":"House Committee on Energy and Commerce","type":"org","subtitle":"org"},{"id":"energy_subcommittee","label":"Energy Subcommittee","type":"org","subtitle":"org"},{"id":"health_subcommittee","label":"Health Subcommittee","type":"org","subtitle":"org"},{"id":"oversight_and_investigations_subcommittee","label":"Oversight and Investigations Subcommittee","type":"org","subtitle":"org"},{"id":"house_committee_on_the_budget","label":"House Committee on the Budget","type":"org","subtitle":"org"},{"id":"senate_committee_on_finance","label":"Senate Committee on Finance","type":"org","subtitle":"org"},{"id":"senate_committee_on_health_education_labor_and_pensions","label":"Senate Committee on Health, Education, Labor, and Pensions","type":"org","subtitle":"org"},{"id":"senate_committee_on_environment_and_public_works","label":"Senate Committee on Environment and Public Works","type":"org","subtitle":"org"},{"id":"senate_committee_on_the_budget","label":"Senate Committee on the Budget","type":"org","subtitle":"org"},{"id":"senate_committee_on_commerce_science_and_transportation","label":"Senate Committee on Commerce, Science, and Transportation","type":"org","subtitle":"org"},{"id":"ny_14","label":"NY-14","type":"place","subtitle":"place"},{"id":"ny_08","label":"NY-08","type":"place","subtitle":"place"},{"id":"la_04","label":"LA-04","type":"place","subtitle":"place"},{"id":"tx_19","label":"TX-19","type":"place","subtitle":"place"},{"id":"vermont","label":"Vermont","type":"place","subtitle":"place"},{"id":"capitol_hill","label":"Capitol Hill","type":"place","subtitle":"place"},{"id":"rep_alexandria_ocasio_cortez","label":"Rep. Alexandria Ocasio-Cortez","type":"person","subtitle":"person"},{"id":"rep_hakeem_jeffries","label":"Rep. Hakeem Jeffries","type":"person","subtitle":"person"},{"id":"rep_mike_johnson","label":"Rep. Mike Johnson","type":"person","subtitle":"person"},{"id":"rep_jodey_arrington","label":"Rep. Jodey Arrington","type":"person","subtitle":"person"},{"id":"sen_bernard_sanders","label":"Sen. Bernard Sanders","type":"person","subtitle":"person"},{"id":"h_r_1_reconciliation_pursuant_to_h_con_res_14","label":"H.R.1 - Reconciliation pursuant to H. Con. Res. 14","type":"asset","subtitle":"asset"},{"id":"public_law_119_21","label":"Public Law 119-21","type":"asset","subtitle":"asset"},{"id":"h_r_3562_defiance_act_of_2025","label":"H.R.3562 - DEFIANCE Act of 2025","type":"asset","subtitle":"asset"},{"id":"h_r_3302_healthy_start_reauthorization_act_of_2025","label":"H.R.3302 - Healthy Start Reauthorization Act of 2025","type":"asset","subtitle":"asset"},{"id":"h_r_1944_10_percent_credit_card_interest_rate_cap_act","label":"H.R.1944 - 10 Percent Credit Card Interest Rate Cap Act","type":"asset","subtitle":"asset"},{"id":"house_roll_call_vote_2_speaker_election_2025","label":"House Roll Call Vote 2 - Speaker Election 2025","type":"asset","subtitle":"asset"},{"id":"event_node_event_d2oty8","label":"Speaker election","type":"event","subtitle":"2025-01-03"},{"id":"event_node_event_61eca9","label":"introduced","type":"event","subtitle":"2025-05-20"},{"id":"event_node_event_j5prdo","label":"became law","type":"event","subtitle":"2025-07-04"}],"edges":[{"id":"rel_1r90kg8","source":"rep_alexandria_ocasio_cortez","target":"democratic_party","label":"member of"},{"id":"rel_i0pfa1","source":"rep_alexandria_ocasio_cortez","target":"ny_14","label":"represents district"},{"id":"rel_l11hf8","source":"rep_alexandria_ocasio_cortez","target":"u_s_house_of_representatives","label":"serves in"},{"id":"rel_2k53c3","source":"rep_alexandria_ocasio_cortez","target":"house_committee_on_energy_and_commerce","label":"member of"},{"id":"rel_1h6hg7b","source":"rep_alexandria_ocasio_cortez","target":"energy_subcommittee","label":"appointed to"},{"id":"rel_1o2xzt2","source":"rep_alexandria_ocasio_cortez","target":"health_subcommittee","label":"appointed to"},{"id":"rel_2uwujw","source":"rep_alexandria_ocasio_cortez","target":"oversight_and_investigations_subcommittee","label":"appointed to"},{"id":"rel_1jy4nd7","source":"rep_alexandria_ocasio_cortez","target":"h_r_3562_defiance_act_of_2025","label":"sponsored"},{"id":"rel_1crpmxi","source":"rep_alexandria_ocasio_cortez","target":"h_r_3302_healthy_start_reauthorization_act_of_2025","label":"sponsored"},{"id":"rel_1msvgmj","source":"rep_alexandria_ocasio_cortez","target":"h_r_1944_10_percent_credit_card_interest_rate_cap_act","label":"sponsored"},{"id":"rel_1w4iky2","source":"rep_hakeem_jeffries","target":"democratic_party","label":"member of"},{"id":"rel_rd77kq","source":"rep_hakeem_jeffries","target":"ny_08","label":"represents district"},{"id":"rel_ud65a3","source":"rep_hakeem_jeffries","target":"u_s_house_of_representatives","label":"serves in"},{"id":"rel_13m9dbe","source":"rep_hakeem_jeffries","target":"house_democratic_caucus","label":"leads"},{"id":"rel_1fi7a9q","source":"rep_hakeem_jeffries","target":"u_s_house_of_representatives","label":"Minority Leader"},{"id":"rel_837m51","source":"rep_mike_johnson","target":"republican_party","label":"member of"},{"id":"rel_o2ylsb","source":"rep_mike_johnson","target":"la_04","label":"represents district"},{"id":"rel_1f2tf1z","source":"rep_mike_johnson","target":"u_s_house_of_representatives","label":"serves in"},{"id":"rel_1qz7zfm","source":"rep_mike_johnson","target":"house_republican_conference","label":"member of"},{"id":"rel_d09w6j","source":"rep_mike_johnson","target":"u_s_house_of_representatives","label":"Speaker"},{"id":"rel_16kyeq","source":"rep_jodey_arrington","target":"republican_party","label":"member of"},{"id":"rel_1w9n167","source":"rep_jodey_arrington","target":"tx_19","label":"represents district"},{"id":"rel_107vnvq","source":"rep_jodey_arrington","target":"u_s_house_of_representatives","label":"serves in"},{"id":"rel_1axeejn","source":"rep_jodey_arrington","target":"house_committee_on_the_budget","label":"chairs"},{"id":"rel_eqj9i6","source":"rep_jodey_arrington","target":"h_r_1_reconciliation_pursuant_to_h_con_res_14","label":"sponsored"},{"id":"rel_1lz3a8u","source":"h_r_1_reconciliation_pursuant_to_h_con_res_14","target":"house_committee_on_the_budget","label":"referred to"},{"id":"rel_1jkltq","source":"h_r_1_reconciliation_pursuant_to_h_con_res_14","target":"public_law_119_21","label":"became"},{"id":"rel_diydz1","source":"sen_bernard_sanders","target":"vermont","label":"represents state"},{"id":"rel_1uwc2pe","source":"sen_bernard_sanders","target":"u_s_senate","label":"serves in"},{"id":"rel_1ygm9q6","source":"sen_bernard_sanders","target":"senate_committee_on_finance","label":"member of"},{"id":"rel_jpdlpk","source":"sen_bernard_sanders","target":"senate_committee_on_health_education_labor_and_pensions","label":"Ranking Member"},{"id":"rel_m29xzv","source":"sen_bernard_sanders","target":"senate_committee_on_environment_and_public_works","label":"member of"},{"id":"rel_ljgh9r","source":"sen_bernard_sanders","target":"senate_committee_on_the_budget","label":"member of"},{"id":"rel_dkt8hu","source":"sen_bernard_sanders","target":"senate_committee_on_commerce_science_and_transportation","label":"member of"},{"id":"rel_1yy4bwg","source":"house_committee_on_energy_and_commerce","target":"u_s_house_of_representatives","label":"committee of"},{"id":"rel_1pv73tn","source":"house_committee_on_the_budget","target":"u_s_house_of_representatives","label":"committee of"},{"id":"rel_1hcoe3i","source":"house_democratic_caucus","target":"democratic_party","label":"caucus of"},{"id":"rel_kazjfz","source":"house_republican_conference","target":"republican_party","label":"conference of"},{"id":"rel_1k02odp","source":"senate_committee_on_finance","target":"u_s_senate","label":"committee of"},{"id":"rel_ok162w","source":"senate_committee_on_health_education_labor_and_pensions","target":"u_s_senate","label":"committee of"},{"id":"rel_ddmro6","source":"senate_committee_on_environment_and_public_works","target":"u_s_senate","label":"committee of"},{"id":"rel_1yi9o4w","source":"senate_committee_on_the_budget","target":"u_s_senate","label":"committee of"},{"id":"rel_uah5fl","source":"senate_committee_on_commerce_science_and_transportation","target":"u_s_senate","label":"committee of"},{"id":"event_d2oty8_rep_mike_johnson","source":"rep_mike_johnson","target":"event_node_event_d2oty8","label":"participated in"},{"id":"event_d2oty8_rep_hakeem_jeffries","source":"rep_hakeem_jeffries","target":"event_node_event_d2oty8","label":"participated in"},{"id":"event_d2oty8_house_roll_call_vote_2_speaker_election_2025","source":"house_roll_call_vote_2_speaker_election_2025","target":"event_node_event_d2oty8","label":"participated in"},{"id":"event_d2oty8_capitol_hill","source":"event_node_event_d2oty8","target":"capitol_hill","label":"at"},{"id":"event_61eca9_rep_jodey_arrington","source":"rep_jodey_arrington","target":"event_node_event_61eca9","label":"participated in"},{"id":"event_61eca9_h_r_1_reconciliation_pursuant_to_h_con_res_14","source":"event_node_event_61eca9","target":"h_r_1_reconciliation_pursuant_to_h_con_res_14","label":"at"},{"id":"event_j5prdo_h_r_1_reconciliation_pursuant_to_h_con_res_14","source":"h_r_1_reconciliation_pursuant_to_h_con_res_14","target":"event_node_event_j5prdo","label":"participated in"},{"id":"event_j5prdo_public_law_119_21","source":"event_node_event_j5prdo","target":"public_law_119_21","label":"at"}]};
     const typeColor = {
       person: "var(--person)",
       org: "var(--org)",
@@ -775,24 +620,3 @@ function renderChartHtml(data: ChartData): string {
   </script>
 </body>
 </html>
-`;
-}
-
-function escapeHtml(value: string): string {
-  return value.replace(/[&<>"']/g, (char) => {
-    switch (char) {
-      case "&":
-        return "&amp;";
-      case "<":
-        return "&lt;";
-      case ">":
-        return "&gt;";
-      case '"':
-        return "&quot;";
-      case "'":
-        return "&#39;";
-      default:
-        return char;
-    }
-  });
-}
